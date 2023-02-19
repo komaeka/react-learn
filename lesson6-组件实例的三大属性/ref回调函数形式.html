@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ref回调函数形式</title>
+  <meta charset="UTF-8" />
+  <script src="../helpful-scripts/react.development.js"></script>
+  <script src="../helpful-scripts/react-dom.development.js"></script>
+  <script src="../helpful-scripts/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="test"></div>
+  <script type="text/babel">
+    // 1.创建类式组件
+    class Demo extends React.Component {
+      render() {
+        return (
+          // currentNode代表的是当前节点
+          <div>
+            <input ref={(currentNode) => { this.input1 = currentNode }} type="text" placeholder="点击按钮提示数据" />
+            <button onClick={this.showData1}>点我提示左侧的数据</button>
+            <input onBlur={this.showData2} ref={(currentNode) => { this.input2 = currentNode }} type="text" placeholder="失去焦点提示数据" />
+          </div>
+        );
+      }
+      showData1 = () => {
+        //   const input = document.getElementById("input1");
+        //   alert(input.value);
+        //   console.log(this.refs.input1);
+        const { input1 } = this;
+        alert(input1.value);
+      };
+      showData2 = () => {
+        const { input2 } = this;
+        alert(input2.value);
+      };
+    }
+
+    // 2.渲染组件到页面
+    ReactDOM.render(<Demo />, document.getElementById("test"));
+  </script>
+</body>
+
+</html>

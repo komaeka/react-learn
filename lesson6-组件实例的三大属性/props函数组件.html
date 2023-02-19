@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>props函数组件</title>
+    <meta charset="UTF-8" />
+    <script src="../helpful-scripts/react.development.js"></script>
+    <script src="../helpful-scripts/react-dom.development.js"></script>
+    <script src="../helpful-scripts/babel.min.js"></script>
+    <!-- 引入prop-types，用于对组件标签的属性进行限制 -->
+    <script src="../helpful-scripts/prop-types.js"></script>
+  </head>
+
+  <body>
+    <div id="test"></div>
+    <script type="text/babel">
+      // 创建函数式组件，函数式组件只能使用props
+      function Person(props) {
+        const { name, sex, age } = props;
+        return (
+          <ul>
+            <li>姓名：{name}</li>
+            <li>性别：{sex}</li>
+            <li>年龄：{age}</li>
+          </ul>
+        );
+      }
+      Person.propTypes = {
+        // 限制属性的数据类型以及是否必须传
+        name: PropTypes.string.isRequired,
+        sex: PropTypes.string,
+        age: PropTypes.number,
+        speak: PropTypes.func,
+      };
+      // 指定默认的属性值
+      Person.defaultProps = {
+        sex: "保密",
+        age: 18,
+      };
+      // 渲染组件到页面
+      ReactDOM.render(
+        <Person name="Alice" age={18} />,
+        document.getElementById("test")
+      );
+    </script>
+  </body>
+</html>

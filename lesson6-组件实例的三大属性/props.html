@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>props</title>
+    <meta charset="UTF-8" />
+    <script src="../helpful-scripts/react.development.js"></script>
+    <script src="../helpful-scripts/react-dom.development.js"></script>
+    <script src="../helpful-scripts/babel.min.js"></script>
+  </head>
+
+  <body>
+    <div id="test1"></div>
+    <div id="test2"></div>
+    <script type="text/babel">
+      // 1.创建类式组件
+      class Person extends React.Component {
+        render() {
+          // console.log(this);
+          const { name, sex, age } = this.props;
+          return (
+            <ul>
+              <li>姓名：{name}</li>
+              <li>性别：{sex}</li>
+              <li>年龄：{age + 1}</li>
+            </ul>
+          );
+        }
+      }
+      // 2.渲染组件到页面
+      ReactDOM.render(
+        <Person name="Alice" sex="女" age={18} />,
+        document.getElementById("test1")
+      );
+      const p = { name: "Tom", sex: "男", age: 20 };
+      // ReactDOM.render(
+      //   <Weather name={p.name} sex={p.sex} age={p.age} />,
+      //   document.getElementById("test2")
+      // );
+      ReactDOM.render(<Person {...p} />, document.getElementById("test2"));
+    </script>
+  </body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>state</title>
+    <meta charset="UTF-8" />
+    <script src="../helpful-scripts/react.development.js"></script>
+    <script src="../helpful-scripts/react-dom.development.js"></script>
+    <script src="../helpful-scripts/babel.min.js"></script>
+  </head>
+
+  <body>
+    <div id="test"></div>
+    <script type="text/babel">
+      // 1.创建类式组件
+      class Weather extends React.Component {
+        // 构造器是否接收props以及是否将props传递给super，取决于是否希望在构造器中通过this访问props
+        constructor(props) {
+          // 构造器只会调用1次
+          console.log("constructor");
+          super(props);
+          // 初始化状态
+          this.state = { isHot: false, wind: "微风" };
+          // 使用bind()解决changeWeather中的this指向问题
+          this.changeWeather = this.changeWeather.bind(this);
+        }
+        render() {
+          // render会初始化调用一次，后续每次更新状态都会调用
+          console.log("render");
+          // 读取状态
+          const { isHot, wind } = this.state;
+          return (
+            <h1 onClick={this.changeWeather}>
+              今天天气很{isHot ? "炎热" : "凉爽"},{wind}
+            </h1>
+          );
+        }
+        changeWeather() {
+          // changeWeather点几次调用几次
+          console.log("changeWeather");
+          // changeWeather放在Weather的原型对象上，供实例使用
+          // 由于changeWeather是作为onClick的回调，所以不是通过实例调用，是直接调用
+          // 类中的方法默认开启了局部的严格模式，所以changeWeather中的this为undefined
+          // console.log(this);
+
+          // 获取原来的isHot值
+          const isHot = this.state.isHot;
+          // 强调：react不支持直接更改状态（state），需要借助react内置的setState去更改状态
+          this.setState({ isHot: !isHot });
+          console.log(this.state);
+          // 下面是错误的写法
+          // this.state.isHot = !this.state.isHot;
+        }
+      }
+      // 2.渲染组件到页面
+      ReactDOM.render(<Weather />, document.getElementById("test"));
+
+      /* const title = document.getElementById("title");
+			title.addEventListener("click", () => {
+				console.log("标题被点击了");
+			}); */
+
+      /* const title = document.getElementById("title");
+			title.onclick = () => {
+				console.log("标题被点击了");
+			}; */
+    </script>
+  </body>
+</html>
