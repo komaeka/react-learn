@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>验证Diffing算法</title>
+  <meta charset="UTF-8" />
+  <script src="../helpful-scripts-18/react.development.js"></script>
+  <script src="../helpful-scripts-18/react-dom.development.js"></script>
+  <script src="../helpful-scripts-18/babel.min.js"></script>
+</head>
+
+<body>
+  <div id="test"></div>
+  <script type="text/babel">
+    // 1.创建类式组件
+    class Time extends React.Component {
+      state = { date: new Date() }
+
+      componentDidMount() {
+        setInterval(() => {
+          this.setState({
+            date: new Date()
+          })
+        }, 1000);
+      }
+
+      render() {
+        return (
+          <div>
+            <h1>hello</h1>
+            <input type="text" />
+            <span>现在是：{this.state.date.toTimeString()}</span>
+            <input type="text" />
+          </div>
+        )
+      }
+    }
+
+    // 2.渲染组件到页面
+    const root = ReactDOM.createRoot(document.getElementById("test"))
+    root.render(<Time />)
+  </script>
+</body>
+
+</html>
